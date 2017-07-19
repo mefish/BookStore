@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookStore.Core.Core.Interfaces;
+using BookStore.Infrastructure;
 using BookStore.Presentation;
 using Microsoft.Practices.Unity;
 
@@ -32,6 +33,7 @@ namespace BookStore
             _unityContainer.RegisterType<ICommandInterpreter, CommandInterpreter>();
             //            _unityContainer.RegisterType<ICommandFactory, ICommandFactory>();
             _unityContainer.RegisterType<ICommandParser, CommandParser>();
+            _unityContainer.RegisterInstance(typeof(IBookInventory), new BookStoreInventory());
         }
     }
 }

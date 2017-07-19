@@ -1,4 +1,5 @@
 ﻿using BookStore.Core.Core.Interfaces;
+using Microsoft.Practices.Unity;
 
 namespace BookStore.Presentation
 {
@@ -6,6 +7,8 @@ namespace BookStore.Presentation
     {
         private const string WELCOME_MESSAGE = "Welcome to Fisher Books -- Books that hook you line and sinker!";
         public ICommandFactory CommandFactory { get; set; }
+
+        [Dependency]
         public ICommandParser CommandParser { get; set; }
 
         public string GetWelcomeMessage()

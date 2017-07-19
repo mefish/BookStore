@@ -8,5 +8,6 @@ namespace BookStore.Core.Core.Models
 {
     public class Book
     {
+        public string ISBN { get; set; }
     }
 }

@@ -20,19 +20,21 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
         }
 
         [Test]
-        public void BooksWithoutTitlesAreNotAddedToInventory()
+        public void BooksWithISBNAreAddedToInventory()
         {
             var command = new StockBookCommand();
 
             var bookInventory = new Mock<IBookInventory>();
 
-            bookInventory.Setup(x => x.AddToInventory(It.IsAny<Book>()));
+            Book book = null;
+
+            bookInventory.Setup(x => x.AddToInventory(It.IsAny<Book>())).Callback((Book bookToAdd) => book = bookToAdd);
 
             command.BookInventory = bookInventory.Object;
 
-            command.Execute(string.Empty);
+            command.Execute("123");
 
-            bookInventory.Verify(x => x.AddToInventory(It.IsAny<Book>()), Times.Never);
+            Assert.AreEqual("123", book.ISBN);
         }
     }
 }

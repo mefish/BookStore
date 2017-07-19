@@ -49,5 +49,15 @@ namespace BookStore.Tests.Tests.Presentation
 
             Assert.AreEqual("argument", _result[1]);
         }
+
+        [Test]
+        public void ArgumentsWithQuotesAreMaintainedWhenParsing()
+        {
+            var command = @"""multiple words""";
+
+            ParseCommand(command);
+
+            Assert.AreEqual(command, _result[0]);
+        }
     }
 }

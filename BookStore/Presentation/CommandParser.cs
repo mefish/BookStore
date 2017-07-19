@@ -1,4 +1,5 @@
-﻿using BookStore.Core.Core.Interfaces;
+﻿using System.Text.RegularExpressions;
+using BookStore.Core.Core.Interfaces;
 
 namespace BookStore.Presentation
 {
@@ -6,7 +7,8 @@ namespace BookStore.Presentation
     {
         public string[] Parse(string commandToParse)
         {
-            return commandToParse.Split(null);
+            var stringArray = Regex.Split(commandToParse, "(?<=^[^\"]*(?:\"[^\"]*\"[^\"]*)*) (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+            return stringArray;
         }
     }
 }

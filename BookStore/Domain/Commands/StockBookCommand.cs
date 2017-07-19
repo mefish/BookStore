@@ -12,6 +12,15 @@ namespace BookStore.Domain.Commands
     {
         public CommandResult Execute(string commandParameters)
         {
+            if (commandParameters == string.Empty) return new CommandResult();
+
+            var bookToAdd = new Book
+                            {
+                                ISBN = "123"
+                            };
+
+            BookInventory.AddToInventory(bookToAdd);
+
             return new CommandResult();
         }
 
