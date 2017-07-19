@@ -1,24 +1,36 @@
 ﻿using System;
+using BookStore.Core.Core.Interfaces;
 using BookStore.Presentation;
+using Microsoft.Practices.Unity;
 
 namespace BookStore
 {
     internal class Program
     {
-        private const string READ_PROMPT = "console> ";
+        private const string READ_PROMPT = "> ";
+        private static UnityContainer _unityContainer;
+        private static ICommandInterpreter _commandInterpreter;
 
         private static void Main(string[] args)
         {
             Console.Title = typeof(Program).Name;
 
+            RegisterTypes();
+
             Run();
+        }
+
+        private static void RegisterTypes()
+        {
+            _unityContainer = new UnityContainer();
+            _unityContainer.RegisterType<ICommandInterpreter, CommandInterpreter>();
         }
 
         private static void Run()
         {
-            var commandInterpreter = new CommandInterpreter();
+            _commandInterpreter = _unityContainer.Resolve<ICommandInterpreter>();
 
-            Console.WriteLine(commandInterpreter.GetWelcomeMessage());
+            Console.WriteLine(_commandInterpreter.GetWelcomeMessage());
 
             while (true)
             {
