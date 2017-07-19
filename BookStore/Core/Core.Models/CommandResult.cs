@@ -1,7 +1,8 @@
 ﻿namespace BookStore.Core.Core.Models
 {
-    internal class CommandResult
+    public class CommandResult
     {
-        //        public bool WasSuccessful { get; set; }
+        public bool WasSuccessful { get; set; }
+        public string Message { get; set; }
     }
 }

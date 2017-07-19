@@ -1,19 +1,26 @@
-﻿using BookStore.Presentation;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using BookStore.Presentation;
+using NUnit.Framework.Internal;
 using NUnit.Framework;
 
 namespace BookStore.Tests.Tests.Presentation
 {
     [TestFixture]
-    internal class StockBookTests
+    class StockBookTests
     {
         [Test]
-        public void CanViewWelcomeMessage_Success()
+        public void StockingABookWithoutATitleFails()
         {
-            var commandInterpeter = new CommandInterpreter();
-
-            var result = commandInterpeter.GetWelcomeMessage();
-
-            Assert.AreEqual("Welcome to Fisher Books -- Books that hook you line and sinker!", result);
+//            var commandInterpreter = new CommandInterpreter();
+//            var command = "stock";
+//
+//            var result = commandInterpreter.ExecuteCommand(command);
+//
+//            Assert.AreEqual(result);
         }
     }
 }

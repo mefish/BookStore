@@ -16,7 +16,9 @@ namespace BookStore
 
         private static void Run()
         {
-            var CommandInterpreter = new CommandInterpreter();
+            var commandInterpreter = new CommandInterpreter();
+
+            Console.WriteLine(commandInterpreter.GetWelcomeMessage());
 
             while (true)
             {
@@ -49,7 +51,7 @@ namespace BookStore
 
         private static string Execute(string command)
         {
-//            return CommandInterpreter.Execute(command);
+            //            return CommandInterpreter.Execute(command);
             return command;
         }
 

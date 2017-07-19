@@ -18,5 +18,9 @@ namespace BookStore.Domain.Commands
 //            BookInventory.AddBookToInventory(book);
 //            return new CommandResult();
 //        }
+        public CommandResult Execute(string commandParameters)
+        {
+            return new CommandResult();
+        }
     }
 }
