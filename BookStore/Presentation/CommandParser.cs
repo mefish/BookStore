@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BookStore.Core.Core.Interfaces;
 
 namespace BookStore.Presentation
 {
-    class CommandParser
+    internal class CommandParser : ICommandParser
     {
         public string[] Parse(string commandToParse)
         {

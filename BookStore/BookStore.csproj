@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs" />
     <Compile Include="Core\Core.Interfaces\IBookInventory.cs" />
     <Compile Include="Core\Core.Interfaces\ICommandFactory.cs" />
     <Compile Include="Core\Core.Interfaces\ICommandInterpreter.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Presentation\CommandParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\Tests.AcceptanceTests\InventoryTests.cs" />
     <Compile Include="Tests\Tests.Domain\Tests.Domain.Commands\StockBookCommandTests.cs" />
     <Compile Include="Tests\Tests.Infrastructure\BookStoreInventoryTests.cs" />
     <Compile Include="Tests\Tests.Presentation\CommandInterpreterTests.cs" />
