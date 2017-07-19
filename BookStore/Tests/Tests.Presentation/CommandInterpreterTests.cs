@@ -9,12 +9,20 @@ namespace BookStore.Tests.Tests.Presentation
     [TestFixture]
     internal class CommandInterpreterTests
     {
+        private Mock<ICommandFactory> _commandFactory;
+        private CommandInterpreter _commandInterpreter;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _commandInterpreter = new CommandInterpreter();
+            _commandFactory = new Mock<ICommandFactory>();
+        }
+
         [Test]
         public void CanViewWelcomeMessage_Success()
         {
-            var commandInterpeter = new CommandInterpreter();
-
-            var result = commandInterpeter.GetWelcomeMessage();
+            var result = _commandInterpreter.GetWelcomeMessage();
 
             Assert.AreEqual("Welcome to Fisher Books -- Books that hook you line and sinker!", result);
         }
@@ -22,21 +30,33 @@ namespace BookStore.Tests.Tests.Presentation
         [Test]
         public void OnCommandErrorWillDisplayError()
         {
-            var commandInterpreter = new CommandInterpreter();
+            _commandFactory.Setup(x => x.ExecuteCommand(string.Empty)).Returns(new CommandResult
+                                                                               {
+                                                                                   WasSuccessful = false,
+                                                                                   Message = "something went wrong"
+                                                                               });
 
-            var commandFactory = new Mock<ICommandFactory>();
+            _commandInterpreter.CommandFactory = _commandFactory.Object;
 
-            commandFactory.Setup(x => x.ExecuteCommand(string.Empty)).Returns(new CommandResult
-                                                                              {
-                                                                                  WasSuccessful = false,
-                                                                                  Message = "something went wrong"
-                                                                              });
-
-            commandInterpreter.CommandFactory = commandFactory.Object;
-
-            var result = commandInterpreter.Execute(string.Empty);
+            var result = _commandInterpreter.Execute(string.Empty);
 
             Assert.AreEqual("Error - something went wrong", result);
+        }
+
+        [Test]
+        public void OnCommandWillDisplayErrorMessage()
+        {
+            _commandFactory.Setup(x => x.ExecuteCommand(string.Empty)).Returns(new CommandResult
+                                                                               {
+                                                                                   WasSuccessful = false,
+                                                                                   Message = "you can't do that!"
+                                                                               });
+
+            _commandInterpreter.CommandFactory = _commandFactory.Object;
+
+            var result = _commandInterpreter.Execute(string.Empty);
+
+            Assert.AreEqual("Error - you can't do that!", result);
         }
     }
 }
