@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Core.Core.Models
 {
-    class Book
+    public class Book
     {
     }
 }

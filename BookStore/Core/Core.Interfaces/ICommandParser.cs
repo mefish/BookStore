@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BookStore.Core.Core.Models;
 
 namespace BookStore.Core.Core.Interfaces
 {
-    public interface ICommandFactory
+    public interface ICommandParser
     {
-        CommandResult ExecuteCommand(string[] empty);
+        string[] Parse(string commandToParse);
     }
 }

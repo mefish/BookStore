@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookStore.Core.Core.Interfaces;
+﻿using BookStore.Core.Core.Interfaces;
 using BookStore.Core.Core.Models;
 using BookStore.Domain.Commands;
 using Moq;
-using NUnit.Framework.Internal;
 using NUnit.Framework;
 
 namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
 {
     [TestFixture]
-    class StockBookCommandTests
+    internal class StockBookCommandTests
     {
         [Test]
         public void StockingABookWithoutATitle_Fails()
@@ -25,6 +19,20 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
             Assert.IsFalse(result.WasSuccessful);
         }
 
+        [Test]
+        public void BooksWithoutTitlesAreNotAddedToInventory()
+        {
+            var command = new StockBookCommand();
 
+            var bookInventory = new Mock<IBookInventory>();
+
+            bookInventory.Setup(x => x.AddToInventory(It.IsAny<Book>()));
+
+            command.BookInventory = bookInventory.Object;
+
+            command.Execute(string.Empty);
+
+            bookInventory.Verify(x => x.AddToInventory(It.IsAny<Book>()), Times.Never);
+        }
     }
 }

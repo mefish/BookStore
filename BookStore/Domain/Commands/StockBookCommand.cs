@@ -10,17 +10,11 @@ namespace BookStore.Domain.Commands
 {
     class StockBookCommand
     {
-//        public IBookInventory BookInventory { get; set; }
-//
-//        public CommandResult Execute()
-//        {
-//            var book = new Book();
-//            BookInventory.AddBookToInventory(book);
-//            return new CommandResult();
-//        }
         public CommandResult Execute(string commandParameters)
         {
             return new CommandResult();
         }
+
+        public IBookInventory BookInventory { get; set; }
     }
 }

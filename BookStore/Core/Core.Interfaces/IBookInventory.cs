@@ -1,7 +1,9 @@
-﻿namespace BookStore.Core.Core.Interfaces
+﻿using BookStore.Core.Core.Models;
+
+namespace BookStore.Core.Core.Interfaces
 {
-    internal interface IBookInventory
+    public interface IBookInventory
     {
-        //        void AddBookToInventory(Book book);
+        void AddToInventory(Book bookToAdd);
     }
 }
