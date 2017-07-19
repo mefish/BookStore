@@ -1,4 +1,5 @@
 ﻿using System;
+using BookStore.Presentation;
 
 namespace BookStore
 {
@@ -15,6 +16,8 @@ namespace BookStore
 
         private static void Run()
         {
+            var CommandInterpreter = new CommandInterpreter();
+
             while (true)
             {
                 var consoleInput = ReadFromConsole();
@@ -46,11 +49,8 @@ namespace BookStore
 
         private static string Execute(string command)
         {
-            switch (command)
-            {
-                default:
-                    return command;
-            }
+//            return CommandInterpreter.Execute(command);
+            return command;
         }
 
         public void DisplayToUser(string stringToDisplay)
