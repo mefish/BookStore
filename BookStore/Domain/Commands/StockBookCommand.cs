@@ -8,7 +8,7 @@ using BookStore.Core.Core.Models;
 
 namespace BookStore.Domain.Commands
 {
-    class StockBookCommand
+    class StockBookCommand : ICommand
     {
         public CommandResult Execute(string commandParameters)
         {
@@ -25,5 +25,10 @@ namespace BookStore.Domain.Commands
         }
 
         public IBookInventory BookInventory { get; set; }
+
+        public CommandResult Execute()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

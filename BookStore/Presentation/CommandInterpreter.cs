@@ -20,8 +20,11 @@ namespace BookStore.Presentation
         {
             var commandArray = CommandParser.Parse(commandToExecute);
 
-            var result = CommandFactory.ExecuteCommand(commandArray);
+            var builtCommand = CommandFactory.BuildCommand(commandArray);
 
+            var result = builtCommand.Execute();
+
+            if (result == null) return "Unknown Error";
             return $"Error - {result.Message}";
         }
     }

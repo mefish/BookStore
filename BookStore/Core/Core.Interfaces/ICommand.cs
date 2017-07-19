@@ -7,8 +7,8 @@ using BookStore.Core.Core.Models;
 
 namespace BookStore.Core.Core.Interfaces
 {
-    public interface ICommandFactory
+    public interface ICommand
     {
-        ICommand BuildCommand(string[] empty);
+        CommandResult Execute();
     }
 }
