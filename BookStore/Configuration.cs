@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookStore.Core.Core.Interfaces;
+﻿using BookStore.Core.Core.Interfaces;
+using BookStore.Domain;
 using BookStore.Infrastructure;
 using BookStore.Presentation;
 using Microsoft.Practices.Unity;
 
 namespace BookStore
 {
-    class Configuration
+    internal class Configuration
     {
         private static UnityContainer _unityContainer;
 
@@ -31,7 +27,7 @@ namespace BookStore
         private static void RegisterTypes()
         {
             _unityContainer.RegisterType<ICommandInterpreter, CommandInterpreter>();
-            //            _unityContainer.RegisterType<ICommandFactory, ICommandFactory>();
+            _unityContainer.RegisterType<ICommandFactory, CommandFactory>();
             _unityContainer.RegisterType<ICommandParser, CommandParser>();
             _unityContainer.RegisterInstance(typeof(IBookInventory), new BookStoreInventory());
         }

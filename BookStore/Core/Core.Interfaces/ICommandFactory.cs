@@ -9,6 +9,6 @@ namespace BookStore.Core.Core.Interfaces
 {
     public interface ICommandFactory
     {
-        ICommand BuildCommand(string[] empty);
+        ICommand BuildCommand(string[] commandToBuild);
     }
 }

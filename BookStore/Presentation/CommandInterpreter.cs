@@ -6,6 +6,8 @@ namespace BookStore.Presentation
     internal class CommandInterpreter : ICommandInterpreter
     {
         private const string WELCOME_MESSAGE = "Welcome to Fisher Books -- Books that hook you line and sinker!";
+
+        [Dependency]
         public ICommandFactory CommandFactory { get; set; }
 
         [Dependency]
