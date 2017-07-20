@@ -1,25 +1,16 @@
 ﻿using BookStore.Core.Core.Interfaces;
 using BookStore.Core.Core.Models;
-using Microsoft.Practices.Unity;
 
 namespace BookStore.Domain.Commands
 {
     internal class StockBookCommand : ICommand
     {
-        public string ISBN;
-        //        public CommandResult Execute(string commandParameters)
-        //        {
-        //            if (commandParameters == string.Empty) return new CommandResult();
-        //
-        //            var bookToAdd = new Book
-        //                            {
-        //                                ISBN = "123"
-        //                            };
-        //
-        //            BookInventory.AddToInventory(bookToAdd);
-        //
-        //            return new CommandResult();
-        //        }
+        public StockBookCommand(ICommandFactory commandFactory)
+        {
+            BookInventory = commandFactory.BookInventory;
+        }
+
+        public string ISBN { get; set; }
 
         public IBookInventory BookInventory { get; set; }
 
@@ -30,7 +21,7 @@ namespace BookStore.Domain.Commands
                                 ISBN = ISBN
                             };
 
-//            BookInventory.AddToInventory(bookToAdd);
+            BookInventory.AddToInventory(bookToAdd);
 
             return new CommandResult();
         }

@@ -22,14 +22,20 @@ namespace BookStore.Presentation
         {
             var commandArray = CommandParser.Parse(commandToExecute);
 
-            var builtCommand = CommandFactory.BuildCommand(commandArray);
-
-            builtCommand.BuildPropertiesFromParameters();
+            var builtCommand = BuildCommand(commandArray);
 
             var result = builtCommand.Execute();
 
             if (result == null) return "Unknown Error";
             return $"Error - {result.Message}";
+        }
+
+        private ICommand BuildCommand(string[] commandArray)
+        {
+            var builtCommand = CommandFactory.BuildCommand(commandArray);
+
+            builtCommand.BuildPropertiesFromParameters();
+            return builtCommand;
         }
     }
 }

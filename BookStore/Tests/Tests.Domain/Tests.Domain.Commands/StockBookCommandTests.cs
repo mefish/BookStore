@@ -9,12 +9,32 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
     [TestFixture]
     internal class StockBookCommandTests
     {
-        [Test]
-        public void StockingABookWithoutATitle_Fails()
-        {
-            var command = new StockBookCommand();
+        private const string ISBN = "123";
+        private Mock<IBookInventory> _bookInventoryMock;
+        private StockBookCommand _command;
+        private Mock<ICommandFactory> _commandFactory;
 
-            var result = command.Execute();
+        [SetUp]
+        public void Setup()
+        {
+            _commandFactory = new Mock<ICommandFactory>();
+
+            SetUpBookInventory();
+
+            _command = new StockBookCommand(_commandFactory.Object);
+        }
+
+        private void SetUpBookInventory()
+        {
+            _bookInventoryMock = new Mock<IBookInventory>();
+
+            _commandFactory.Setup(x => x.BookInventory).Returns(_bookInventoryMock.Object);
+        }
+
+        [Test]
+        public void StockingABookWithoutISBNFails()
+        {
+            var result = _command.Execute();
 
             Assert.IsFalse(result.WasSuccessful);
         }
@@ -22,43 +42,34 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
         [Test]
         public void CanBuildISBNFromParameters()
         {
-            var isbn = "123";
+            _command.Parameters = new[]
+                                  {
+                                      ISBN
+                                  };
 
-            var command = new StockBookCommand
-                          {
-                Parameters = new[] { isbn }
-            };
+            _command.BuildPropertiesFromParameters();
 
-            command.BuildPropertiesFromParameters();
-
-            Assert.AreEqual(isbn, command.ISBN);
+            Assert.AreEqual(ISBN, _command.ISBN);
         }
 
-
         [Test]
-        [Ignore("In progress")]
         public void BooksWithISBNAreAddedToInventory()
         {
-            var isbn = "123";
-            var command = new StockBookCommand
-                          {
-                              Parameters = new [] {isbn}
-                          };
-
-            var bookInventory = new Mock<IBookInventory>();
+            _command.Parameters = new[]
+                                  {
+                                      ISBN
+                                  };
 
             Book book = null;
 
-            bookInventory.Setup(x => x.AddToInventory(It.IsAny<Book>()))
-                         .Callback((Book bookToAdd) => book = bookToAdd);
+            _bookInventoryMock.Setup(x => x.AddToInventory(It.IsAny<Book>()))
+                              .Callback((Book bookToAdd) => book = bookToAdd);
 
-            command.BookInventory = bookInventory.Object;
+            _command.BuildPropertiesFromParameters();
 
-            command.BuildPropertiesFromParameters();
+            _command.Execute();
 
-            command.Execute();
-
-            Assert.AreEqual(isbn, book.ISBN);
+            Assert.AreEqual(ISBN, book.ISBN);
         }
     }
 }

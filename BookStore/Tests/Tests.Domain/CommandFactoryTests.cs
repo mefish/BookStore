@@ -1,8 +1,6 @@
 ﻿using System.Linq;
-using BookStore.Core.Core.Interfaces;
 using BookStore.Domain;
 using BookStore.Domain.Commands;
-using Moq;
 using NUnit.Framework;
 
 namespace BookStore.Tests.Tests.Domain
@@ -10,12 +8,17 @@ namespace BookStore.Tests.Tests.Domain
     [TestFixture]
     internal class CommandFactoryTests
     {
+        private CommandFactory _commandFactory;
+
+        public void Setup()
+        {
+            _commandFactory = new CommandFactory();
+        }
+
         [Test]
         public void CommandNotFoundReturnsACommandNotFound()
         {
-            var commandFactory = new CommandFactory();
-
-            var command = commandFactory.BuildCommand(new string[0]);
+            var command = _commandFactory.BuildCommand(new string[0]);
 
             var result = command.Execute();
 
@@ -25,16 +28,31 @@ namespace BookStore.Tests.Tests.Domain
         [Test]
         public void WillBuildStockBookCommand()
         {
-            var commandFactory = new CommandFactory();
-
-            var command = commandFactory.BuildCommand(new[]
-                                                      {
-                                                          "stock"
-                                                      });
+            var command = _commandFactory.BuildCommand(new[]
+                                                       {
+                                                           "stock"
+                                                       });
 
             Assert.AreEqual(typeof(StockBookCommand), command.GetType());
         }
-    }
 
-    internal class TestCommand { }
+        [Test]
+        public void CommandArgumentsAreAddedtoCommandParameters()
+        {
+            var commandToBuild = new[]
+                                 {
+                                     "stock",
+                                     "hello",
+                                     "how",
+                                     "are",
+                                     "you"
+                                 };
+
+            var expectedParameters = commandToBuild.Skip(1);
+
+            var command = _commandFactory.BuildCommand(commandToBuild);
+
+            Assert.IsTrue(expectedParameters.SequenceEqual(command.Parameters));
+        }
+    }
 }

@@ -94,8 +94,6 @@ namespace BookStore.Tests.Tests.Presentation
             _commandParser.VerifyAll();
         }
 
-        
-
         [Test]
         public void ParsedCommandArraysAreSentToCommandFactory()
         {

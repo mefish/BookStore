@@ -11,7 +11,6 @@ using NUnit.Framework;
 namespace BookStore.Tests.Tests.AcceptanceTests
 {
     [TestFixture]
-    [Ignore("In Progress")]
     class InventoryTests
     {
         [Test]
@@ -26,8 +25,6 @@ namespace BookStore.Tests.Tests.AcceptanceTests
             var newBook = data.GetAllBooks().First(x => x.ISBN == "123");
 
             Assert.AreEqual("123", newBook.ISBN);
-//            Assert.AreEqual("The Stranger", newBook.Title);
-//            Assert.AreEqual("Camus", newBook.Author);
         }
     }
 }
