@@ -10,10 +10,10 @@ namespace BookStore.Tests.Tests.Presentation
     internal class CommandInterpreterTests
     {
         private const string WELCOME_MESSAGE = "Welcome to Fisher Books -- Books that hook you line and sinker!";
-        private Mock<ICommandFactory> _commandFactory;
+        private Mock<ICommandPresenterFactory> _commandFactory;
         private CommandInterpreter _commandInterpreter;
-        private Mock<ICommand> _commandMock;
         private Mock<ICommandParser> _commandParser;
+        private Mock<IPresenter> _presenterMock;
 
         [SetUp]
         public void SetUp()
@@ -24,7 +24,7 @@ namespace BookStore.Tests.Tests.Presentation
 
             CreateCommandParser();
 
-            _commandMock = new Mock<ICommand>();
+            _presenterMock = new Mock<IPresenter>();
         }
 
         [Test]
@@ -42,11 +42,11 @@ namespace BookStore.Tests.Tests.Presentation
 
             SetUpParser();
 
-            SetUpCommandFactory();
+            SetUpPresenterFactory();
 
             _commandInterpreter.Execute(string.Empty);
 
-            _commandMock.VerifyAll();
+            _presenterMock.VerifyAll();
         }
 
         [Test]
@@ -54,13 +54,13 @@ namespace BookStore.Tests.Tests.Presentation
         {
             SetUpParser();
 
-            SetUpCommandFactory();
+            SetUpPresenterFactory();
 
-            _commandMock.Setup(x => x.BuildPropertiesFromParameters());
+            _presenterMock.Setup(x => x.BuildPropertiesFromParameters());
 
             _commandInterpreter.Execute(string.Empty);
 
-            _commandMock.VerifyAll();
+            _presenterMock.VerifyAll();
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace BookStore.Tests.Tests.Presentation
         {
             SetUpParser();
 
-            SetUpCommandFactory();
+            SetUpPresenterFactory();
 
             var successMessage = "It worked!";
 
@@ -84,7 +84,7 @@ namespace BookStore.Tests.Tests.Presentation
         {
             SetUpParser();
 
-            SetUpCommandFactory();
+            SetUpPresenterFactory();
 
             _commandInterpreter.Execute(string.Empty);
 
@@ -101,7 +101,7 @@ namespace BookStore.Tests.Tests.Presentation
 
             _commandParser.Setup(x => x.Parse(It.IsAny<string>())).Returns(stringArrayToReturn);
 
-            _commandFactory.Setup(x => x.BuildCommand(stringArrayToReturn)).Returns(_commandMock.Object);
+            _commandFactory.Setup(x => x.BuildCommand(stringArrayToReturn)).Returns(_presenterMock.Object);
 
             _commandInterpreter.Execute(string.Empty);
 
@@ -113,7 +113,7 @@ namespace BookStore.Tests.Tests.Presentation
         {
             SetUpParser();
 
-            SetUpCommandFactory();
+            SetUpPresenterFactory();
 
             var response = _commandInterpreter.Execute(string.Empty);
 
@@ -123,7 +123,7 @@ namespace BookStore.Tests.Tests.Presentation
         [Test]
         public void OnCommandErrorWillDisplayError()
         {
-            _commandFactory.Setup(x => x.BuildCommand(new string[0])).Returns(_commandMock.Object);
+            _commandFactory.Setup(x => x.BuildCommand(new string[0])).Returns(_presenterMock.Object);
 
             var errorMessage = "something went wrong";
 
@@ -137,7 +137,7 @@ namespace BookStore.Tests.Tests.Presentation
         [Test]
         public void OnCommandWillDisplayErrorMessage()
         {
-            SetUpCommandFactory();
+            SetUpPresenterFactory();
 
             var errorMessage = "you can't do that!";
 
@@ -153,9 +153,9 @@ namespace BookStore.Tests.Tests.Presentation
             _commandParser.Setup(x => x.Parse(It.IsAny<string>())).Returns(new string[1]);
         }
 
-        private void SetUpCommandFactory()
+        private void SetUpPresenterFactory()
         {
-            _commandFactory.Setup(x => x.BuildCommand(It.IsAny<string[]>())).Returns(_commandMock.Object);
+            _commandFactory.Setup(x => x.BuildCommand(It.IsAny<string[]>())).Returns(_presenterMock.Object);
         }
 
         private void CreateCommandParser()
@@ -167,9 +167,9 @@ namespace BookStore.Tests.Tests.Presentation
 
         private void CreateCommandFactory()
         {
-            _commandFactory = new Mock<ICommandFactory>();
+            _commandFactory = new Mock<ICommandPresenterFactory>();
 
-            _commandInterpreter.CommandFactory = _commandFactory.Object;
+            _commandInterpreter.CommandPresenterFactory = _commandFactory.Object;
         }
 
         private void SetUpCommand(bool wasSuccussful, string message = "")
@@ -180,7 +180,7 @@ namespace BookStore.Tests.Tests.Presentation
                                     WasSuccessful = wasSuccussful
                                 };
 
-            _commandMock.Setup(x => x.Execute()).Returns(commandResult);
+            _presenterMock.Setup(x => x.ExecuteCommand()).Returns(commandResult);
         }
     }
 }

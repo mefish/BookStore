@@ -7,8 +7,12 @@ using BookStore.Core.Core.Models;
 
 namespace BookStore.Core.Core.Interfaces
 {
-    public interface ICommand
+    public interface IPresenter
     {
-        CommandResult Execute();
+        string[] Parameters { get; set; }
+
+        void BuildPropertiesFromParameters();
+
+        CommandResult ExecuteCommand();
     }
 }

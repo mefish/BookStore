@@ -4,7 +4,7 @@ using BookStore.Core.Core.Models;
 
 namespace BookStore.Domain.Commands
 {
-    internal class CommandNotFoundCommand : ICommand
+    internal class CommandNotFoundCommand : IPresenter
     {
         public CommandResult Execute()
         {
@@ -18,6 +18,14 @@ namespace BookStore.Domain.Commands
         public void BuildPropertiesFromParameters()
         {
             throw new NotImplementedException();
+        }
+
+        public CommandResult ExecuteCommand()
+        {
+            return new CommandResult
+                   {
+                       Message = "Command not found"
+                   };
         }
     }
 }

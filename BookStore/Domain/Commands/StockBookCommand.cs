@@ -5,9 +5,9 @@ namespace BookStore.Domain.Commands
 {
     internal class StockBookCommand : ICommand
     {
-        public StockBookCommand(ICommandFactory commandFactory)
+        public StockBookCommand(ICommandPresenterFactory commandPresenterFactory)
         {
-            BookInventory = commandFactory.BookInventory;
+            BookInventory = commandPresenterFactory.BookInventory;
         }
 
         public string ISBN { get; set; }
@@ -32,13 +32,10 @@ namespace BookStore.Domain.Commands
                    };
         }
 
-        public string[] Parameters { get; set; }
+        
 
         public bool IsValid { get { return ISBN != null; } }
 
-        public void BuildPropertiesFromParameters()
-        {
-            ISBN = Parameters[0];
-        }
+        
     }
 }

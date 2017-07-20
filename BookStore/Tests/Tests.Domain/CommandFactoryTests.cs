@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using BookStore.Domain;
 using BookStore.Domain.Commands;
+using BookStore.Presentation.Commands;
 using NUnit.Framework;
 
 namespace BookStore.Tests.Tests.Domain
@@ -8,33 +9,33 @@ namespace BookStore.Tests.Tests.Domain
     [TestFixture]
     internal class CommandFactoryTests
     {
-        private CommandFactory _commandFactory;
+        private CommandPresenterPresenterFactory _commandPresenterPresenterFactory;
 
         [SetUp]
         public void Setup()
         {
-            _commandFactory = new CommandFactory();
+            _commandPresenterPresenterFactory = new CommandPresenterPresenterFactory();
         }
 
         [Test]
         public void CommandNotFoundReturnsACommandNotFound()
         {
-            var command = _commandFactory.BuildCommand(new string[0]);
+            var command = _commandPresenterPresenterFactory.BuildCommand(new string[0]);
 
-            var result = command.Execute();
+            var result = command.ExecuteCommand();
 
             Assert.IsFalse(result.WasSuccessful);
         }
 
         [Test]
-        public void WillBuildStockBookCommand()
+        public void WillBuildStockBookPresenter()
         {
-            var command = _commandFactory.BuildCommand(new[]
+            var command = _commandPresenterPresenterFactory.BuildCommand(new[]
                                                        {
                                                            "stock"
                                                        });
 
-            Assert.AreEqual(typeof(StockBookCommand), command.GetType());
+            Assert.AreEqual(typeof(StockBookPresenter), command.GetType());
         }
 
         [Test]
@@ -51,7 +52,7 @@ namespace BookStore.Tests.Tests.Domain
 
             var expectedParameters = commandToBuild.Skip(1);
 
-            var command = _commandFactory.BuildCommand(commandToBuild);
+            var command = _commandPresenterPresenterFactory.BuildCommand(commandToBuild);
 
             Assert.IsTrue(expectedParameters.SequenceEqual(command.Parameters));
         }

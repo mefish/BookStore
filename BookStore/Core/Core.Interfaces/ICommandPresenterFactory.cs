@@ -1,9 +1,9 @@
 ﻿namespace BookStore.Core.Core.Interfaces
 {
-    public interface ICommandFactory
+    public interface ICommandPresenterFactory
     {
         IBookInventory BookInventory { get; set; }
 
-        ICommand BuildCommand(string[] commandToBuild);
+        IPresenter BuildCommand(string[] commandToBuild);
     }
 }

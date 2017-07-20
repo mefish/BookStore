@@ -12,12 +12,12 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
         private const string ISBN = "123";
         private Mock<IBookInventory> _bookInventoryMock;
         private StockBookCommand _command;
-        private Mock<ICommandFactory> _commandFactory;
+        private Mock<ICommandPresenterFactory> _commandFactory;
 
         [SetUp]
         public void Setup()
         {
-            _commandFactory = new Mock<ICommandFactory>();
+            _commandFactory = new Mock<ICommandPresenterFactory>();
 
             SetUpBookInventory();
 
@@ -40,31 +40,13 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
         }
 
         [Test]
-        public void CanBuildISBNFromParameters()
-        {
-            _command.Parameters = new[]
-                                  {
-                                      ISBN
-                                  };
-
-            _command.BuildPropertiesFromParameters();
-
-            Assert.AreEqual(ISBN, _command.ISBN);
-        }
-
-        [Test]
         public void OnStoreSuccessWillReturnSuccess()
         {
-            _command.Parameters = new[]
-                                  {
-                                      ISBN
-                                  };
-
             _bookInventoryMock.Setup(x => x.AddToInventory(It.IsAny<Book>()));
 
-            _command.BuildPropertiesFromParameters();
+            _command.ISBN = ISBN;
 
-           var result = _command.Execute();
+            var result = _command.Execute();
 
             Assert.IsTrue(result.WasSuccessful);
         }
@@ -72,17 +54,12 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
         [Test]
         public void BooksWithISBNAreAddedToInventory()
         {
-            _command.Parameters = new[]
-                                  {
-                                      ISBN
-                                  };
+            _command.ISBN = ISBN;
 
             Book book = null;
 
             _bookInventoryMock.Setup(x => x.AddToInventory(It.IsAny<Book>()))
                               .Callback((Book bookToAdd) => book = bookToAdd);
-
-            _command.BuildPropertiesFromParameters();
 
             _command.Execute();
 

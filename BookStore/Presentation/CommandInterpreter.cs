@@ -8,7 +8,7 @@ namespace BookStore.Presentation
         private const string WELCOME_MESSAGE = "Welcome to Fisher Books -- Books that hook you line and sinker!";
 
         [Dependency]
-        public ICommandFactory CommandFactory { get; set; }
+        public ICommandPresenterFactory CommandPresenterFactory { get; set; }
 
         [Dependency]
         public ICommandParser CommandParser { get; set; }
@@ -22,18 +22,18 @@ namespace BookStore.Presentation
         {
             var commandArray = CommandParser.Parse(commandToExecute);
 
-            var builtCommand = BuildCommand(commandArray);
+            var builtCommand = BuildPresenterForCommand(commandArray);
 
-            var result = builtCommand.Execute();
+            var result = builtCommand.ExecuteCommand();
 
             if (result == null) return "Unknown Error";
             if (result.WasSuccessful) return $"Success - {result.Message}";
             return $"Error - {result.Message}";
         }
 
-        private ICommand BuildCommand(string[] commandArray)
+        private IPresenter BuildPresenterForCommand(string[] commandArray)
         {
-            var builtCommand = CommandFactory.BuildCommand(commandArray);
+            var builtCommand = CommandPresenterFactory.BuildCommand(commandArray);
 
             builtCommand.BuildPropertiesFromParameters();
             return builtCommand;

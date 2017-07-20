@@ -74,10 +74,11 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Core\Core.Interfaces\IBookInventory.cs" />
     <Compile Include="Core\Core.Interfaces\ICommand.cs" />
-    <Compile Include="Core\Core.Interfaces\ICommandFactory.cs" />
+    <Compile Include="Core\Core.Interfaces\ICommandPresenterFactory.cs" />
     <Compile Include="Core\Core.Interfaces\ICommandInterpreter.cs" />
     <Compile Include="Core\Core.Interfaces\ICommandParser.cs" />
     <Compile Include="Core\Core.Interfaces\IDependencyContainer.cs" />
+    <Compile Include="Core\Core.Interfaces\IPresenter.cs" />
     <Compile Include="Core\Core.Models\Book.cs" />
     <Compile Include="Core\Core.Models\CommandResult.cs" />
     <Compile Include="Domain\CommandFactory.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Infrastructure\BookStoreInventory.cs" />
     <Compile Include="Presentation\CommandInterpreter.cs" />
     <Compile Include="Presentation\CommandParser.cs" />
+    <Compile Include="Presentation\Commands\StockBookPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Tests.AcceptanceTests\InventoryTests.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Tests\Tests.Infrastructure\BookStoreInventoryTests.cs" />
     <Compile Include="Tests\Tests.Presentation\CommandInterpreterTests.cs" />
     <Compile Include="Tests\Tests.Presentation\CommandParserTests.cs" />
+    <Compile Include="Tests\Tests.Presentation\Commands\StockBookPresenterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
