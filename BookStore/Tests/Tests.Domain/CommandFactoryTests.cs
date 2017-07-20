@@ -10,6 +10,7 @@ namespace BookStore.Tests.Tests.Domain
     {
         private CommandFactory _commandFactory;
 
+        [SetUp]
         public void Setup()
         {
             _commandFactory = new CommandFactory();
