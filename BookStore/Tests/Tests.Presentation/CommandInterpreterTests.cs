@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Design.Serialization;
-using BookStore.Core.Core.Interfaces;
+﻿using BookStore.Core.Core.Interfaces;
 using BookStore.Core.Core.Models;
 using BookStore.Presentation;
 using Moq;
@@ -13,23 +12,33 @@ namespace BookStore.Tests.Tests.Presentation
         private const string WELCOME_MESSAGE = "Welcome to Fisher Books -- Books that hook you line and sinker!";
         private Mock<ICommandFactory> _commandFactory;
         private CommandInterpreter _commandInterpreter;
-        private Mock<ICommandParser> _commandParser;
         private Mock<ICommand> _commandMock;
+        private Mock<ICommandParser> _commandParser;
 
         [SetUp]
         public void SetUp()
         {
             _commandInterpreter = new CommandInterpreter();
 
-            _commandFactory = new Mock<ICommandFactory>();
+            CreateCommandFactory();
 
-            _commandInterpreter.CommandFactory = _commandFactory.Object;
+            CreateCommandParser();
 
+            _commandMock = new Mock<ICommand>();
+        }
+
+        private void CreateCommandParser()
+        {
             _commandParser = new Mock<ICommandParser>();
 
             _commandInterpreter.CommandParser = _commandParser.Object;
+        }
 
-            _commandMock = new Mock<ICommand>();
+        private void CreateCommandFactory()
+        {
+            _commandFactory = new Mock<ICommandFactory>();
+
+            _commandInterpreter.CommandFactory = _commandFactory.Object;
         }
 
         [Test]
@@ -47,19 +56,30 @@ namespace BookStore.Tests.Tests.Presentation
 
             _commandParser.Setup(x => x.Parse(It.IsAny<string>())).Returns(new string[1]);
 
-            _commandFactory.Setup(x => x.BuildCommand(It.IsAny<string[]>())).Returns(_commandMock.Object);
+            SetUpCommandFactoryReturnsCommandMock();
 
             _commandInterpreter.Execute(string.Empty);
 
             _commandMock.VerifyAll();
         }
 
-        private void SetUpCommandToReturnCommandResult(string message = "")
+        private void SetUpCommandFactoryReturnsCommandMock()
         {
-            _commandMock.Setup(x => x.Execute()).Returns(new CommandResult
-                                                         {
-                                                             Message = message
-                                                         });
+            _commandFactory.Setup(x => x.BuildCommand(It.IsAny<string[]>())).Returns(_commandMock.Object);
+        }
+
+        [Test]
+        public void CommandWillCallFactoryToPopulatePropertiesFromAgruments()
+        {
+            _commandParser.Setup(x => x.Parse(It.IsAny<string>())).Returns(new string[1]);
+
+            SetUpCommandFactoryReturnsCommandMock();
+
+            _commandMock.Setup(x => x.BuildPropertiesFromParameters());
+
+            _commandInterpreter.Execute(string.Empty);
+
+            _commandMock.VerifyAll();
         }
 
         [Test]
@@ -67,12 +87,14 @@ namespace BookStore.Tests.Tests.Presentation
         {
             _commandParser.Setup(x => x.Parse(It.IsAny<string>())).Returns(new string[1]);
 
-            _commandFactory.Setup(x => x.BuildCommand(It.IsAny<string[]>())).Returns(_commandMock.Object);
+            SetUpCommandFactoryReturnsCommandMock();
 
             _commandInterpreter.Execute(string.Empty);
 
             _commandParser.VerifyAll();
         }
+
+        
 
         [Test]
         public void ParsedCommandArraysAreSentToCommandFactory()
@@ -96,7 +118,7 @@ namespace BookStore.Tests.Tests.Presentation
         {
             _commandParser.Setup(x => x.Parse(It.IsAny<string>())).Returns(new string[1]);
 
-            _commandFactory.Setup(x => x.BuildCommand(It.IsAny<string[]>())).Returns(_commandMock.Object);
+            SetUpCommandFactoryReturnsCommandMock();
 
             var response = _commandInterpreter.Execute(string.Empty);
 
@@ -118,13 +140,21 @@ namespace BookStore.Tests.Tests.Presentation
         [Test]
         public void OnCommandWillDisplayErrorMessage()
         {
-            _commandFactory.Setup(x => x.BuildCommand(It.IsAny<string[]>())).Returns(_commandMock.Object);
-            
+            SetUpCommandFactoryReturnsCommandMock();
+
             SetUpCommandToReturnCommandResult("you can't do that!");
 
             var result = _commandInterpreter.Execute(string.Empty);
 
             Assert.AreEqual("Error - you can't do that!", result);
+        }
+
+        private void SetUpCommandToReturnCommandResult(string message = "")
+        {
+            _commandMock.Setup(x => x.Execute()).Returns(new CommandResult
+                                                         {
+                                                             Message = message
+                                                         });
         }
     }
 }

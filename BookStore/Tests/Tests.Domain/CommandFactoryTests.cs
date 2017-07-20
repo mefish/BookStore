@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using BookStore.Core.Core.Interfaces;
 using BookStore.Domain;
 using BookStore.Domain.Commands;
-using NUnit.Framework.Internal;
+using Moq;
 using NUnit.Framework;
 
 namespace BookStore.Tests.Tests.Domain
 {
     [TestFixture]
-    class CommandFactoryTests
+    internal class CommandFactoryTests
     {
         [Test]
         public void CommandNotFoundReturnsACommandNotFound()
@@ -38,4 +35,6 @@ namespace BookStore.Tests.Tests.Domain
             Assert.AreEqual(typeof(StockBookCommand), command.GetType());
         }
     }
+
+    internal class TestCommand { }
 }

@@ -1,34 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookStore.Core.Core.Interfaces;
+﻿using BookStore.Core.Core.Interfaces;
 using BookStore.Core.Core.Models;
+using Microsoft.Practices.Unity;
 
 namespace BookStore.Domain.Commands
 {
-    class StockBookCommand : ICommand
+    internal class StockBookCommand : ICommand
     {
-        public CommandResult Execute(string commandParameters)
-        {
-            if (commandParameters == string.Empty) return new CommandResult();
-
-            var bookToAdd = new Book
-                            {
-                                ISBN = "123"
-                            };
-
-            BookInventory.AddToInventory(bookToAdd);
-
-            return new CommandResult();
-        }
+        public string ISBN;
+        //        public CommandResult Execute(string commandParameters)
+        //        {
+        //            if (commandParameters == string.Empty) return new CommandResult();
+        //
+        //            var bookToAdd = new Book
+        //                            {
+        //                                ISBN = "123"
+        //                            };
+        //
+        //            BookInventory.AddToInventory(bookToAdd);
+        //
+        //            return new CommandResult();
+        //        }
 
         public IBookInventory BookInventory { get; set; }
 
         public CommandResult Execute()
         {
-            throw new NotImplementedException();
+            var bookToAdd = new Book
+                            {
+                                ISBN = ISBN
+                            };
+
+//            BookInventory.AddToInventory(bookToAdd);
+
+            return new CommandResult();
+        }
+
+        public string[] Parameters { get; set; }
+
+        public void BuildPropertiesFromParameters()
+        {
+            ISBN = Parameters[0];
         }
     }
 }

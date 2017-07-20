@@ -10,5 +10,9 @@ namespace BookStore.Core.Core.Interfaces
     public interface ICommand
     {
         CommandResult Execute();
+
+        string[] Parameters { get; set; }
+
+        void BuildPropertiesFromParameters();
     }
 }

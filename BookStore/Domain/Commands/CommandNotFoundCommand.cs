@@ -14,5 +14,12 @@ namespace BookStore.Domain.Commands
         {
             return new CommandResult();
         }
+
+        public string[] Parameters { get; set; }
+
+        public void BuildPropertiesFromParameters()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -14,27 +14,51 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
         {
             var command = new StockBookCommand();
 
-            var result = command.Execute(string.Empty);
+            var result = command.Execute();
 
             Assert.IsFalse(result.WasSuccessful);
         }
 
         [Test]
+        public void CanBuildISBNFromParameters()
+        {
+            var isbn = "123";
+
+            var command = new StockBookCommand
+                          {
+                Parameters = new[] { isbn }
+            };
+
+            command.BuildPropertiesFromParameters();
+
+            Assert.AreEqual(isbn, command.ISBN);
+        }
+
+
+        [Test]
+        [Ignore("In progress")]
         public void BooksWithISBNAreAddedToInventory()
         {
-            var command = new StockBookCommand();
+            var isbn = "123";
+            var command = new StockBookCommand
+                          {
+                              Parameters = new [] {isbn}
+                          };
 
             var bookInventory = new Mock<IBookInventory>();
 
             Book book = null;
 
-            bookInventory.Setup(x => x.AddToInventory(It.IsAny<Book>())).Callback((Book bookToAdd) => book = bookToAdd);
+            bookInventory.Setup(x => x.AddToInventory(It.IsAny<Book>()))
+                         .Callback((Book bookToAdd) => book = bookToAdd);
 
             command.BookInventory = bookInventory.Object;
 
-            command.Execute("123");
+            command.BuildPropertiesFromParameters();
 
-            Assert.AreEqual("123", book.ISBN);
+            command.Execute();
+
+            Assert.AreEqual(isbn, book.ISBN);
         }
     }
 }

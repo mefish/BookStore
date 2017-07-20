@@ -24,6 +24,8 @@ namespace BookStore.Presentation
 
             var builtCommand = CommandFactory.BuildCommand(commandArray);
 
+            builtCommand.BuildPropertiesFromParameters();
+
             var result = builtCommand.Execute();
 
             if (result == null) return "Unknown Error";
