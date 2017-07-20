@@ -91,7 +91,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Tests.AcceptanceTests\InventoryTests.cs" />
-    <Compile Include="Tests\Tests.Domain\CommandFactoryTests.cs" />
+    <Compile Include="Tests\Tests.Presentation\CommandPresenterFactoryTests.cs" />
     <Compile Include="Tests\Tests.Domain\Tests.Domain.Commands\StockBookCommandTests.cs" />
     <Compile Include="Tests\Tests.Infrastructure\BookStoreInventoryTests.cs" />
     <Compile Include="Tests\Tests.Presentation\CommandInterpreterTests.cs" />

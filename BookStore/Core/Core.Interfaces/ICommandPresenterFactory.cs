@@ -4,6 +4,6 @@
     {
         IBookInventory BookInventory { get; set; }
 
-        IPresenter BuildCommand(string[] commandToBuild);
+        IPresenter BuildPresnter(string[] commandToBuild);
     }
 }

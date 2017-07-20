@@ -33,7 +33,7 @@ namespace BookStore.Presentation
 
         private IPresenter BuildPresenterForCommand(string[] commandArray)
         {
-            var builtCommand = CommandPresenterFactory.BuildCommand(commandArray);
+            var builtCommand = CommandPresenterFactory.BuildPresnter(commandArray);
 
             builtCommand.BuildPropertiesFromParameters();
             return builtCommand;

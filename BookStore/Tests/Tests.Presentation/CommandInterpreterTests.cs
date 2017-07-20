@@ -101,7 +101,7 @@ namespace BookStore.Tests.Tests.Presentation
 
             _commandParser.Setup(x => x.Parse(It.IsAny<string>())).Returns(stringArrayToReturn);
 
-            _commandFactory.Setup(x => x.BuildCommand(stringArrayToReturn)).Returns(_presenterMock.Object);
+            _commandFactory.Setup(x => x.BuildPresnter(stringArrayToReturn)).Returns(_presenterMock.Object);
 
             _commandInterpreter.Execute(string.Empty);
 
@@ -123,7 +123,7 @@ namespace BookStore.Tests.Tests.Presentation
         [Test]
         public void OnCommandErrorWillDisplayError()
         {
-            _commandFactory.Setup(x => x.BuildCommand(new string[0])).Returns(_presenterMock.Object);
+            _commandFactory.Setup(x => x.BuildPresnter(new string[0])).Returns(_presenterMock.Object);
 
             var errorMessage = "something went wrong";
 
@@ -155,7 +155,7 @@ namespace BookStore.Tests.Tests.Presentation
 
         private void SetUpPresenterFactory()
         {
-            _commandFactory.Setup(x => x.BuildCommand(It.IsAny<string[]>())).Returns(_presenterMock.Object);
+            _commandFactory.Setup(x => x.BuildPresnter(It.IsAny<string[]>())).Returns(_presenterMock.Object);
         }
 
         private void CreateCommandParser()

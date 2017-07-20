@@ -1,13 +1,12 @@
 ﻿using System.Linq;
 using BookStore.Domain;
-using BookStore.Domain.Commands;
 using BookStore.Presentation.Commands;
 using NUnit.Framework;
 
 namespace BookStore.Tests.Tests.Domain
 {
     [TestFixture]
-    internal class CommandFactoryTests
+    internal class CommandPresenterFactoryTests
     {
         private CommandPresenterPresenterFactory _commandPresenterPresenterFactory;
 
@@ -20,7 +19,7 @@ namespace BookStore.Tests.Tests.Domain
         [Test]
         public void CommandNotFoundReturnsACommandNotFound()
         {
-            var command = _commandPresenterPresenterFactory.BuildCommand(new string[0]);
+            var command = _commandPresenterPresenterFactory.BuildPresnter(new string[0]);
 
             var result = command.ExecuteCommand();
 
@@ -30,10 +29,10 @@ namespace BookStore.Tests.Tests.Domain
         [Test]
         public void WillBuildStockBookPresenter()
         {
-            var command = _commandPresenterPresenterFactory.BuildCommand(new[]
-                                                       {
-                                                           "stock"
-                                                       });
+            var command = _commandPresenterPresenterFactory.BuildPresnter(new[]
+                                                                         {
+                                                                             "stock"
+                                                                         });
 
             Assert.AreEqual(typeof(StockBookPresenter), command.GetType());
         }
@@ -52,7 +51,7 @@ namespace BookStore.Tests.Tests.Domain
 
             var expectedParameters = commandToBuild.Skip(1);
 
-            var command = _commandPresenterPresenterFactory.BuildCommand(commandToBuild);
+            var command = _commandPresenterPresenterFactory.BuildPresnter(commandToBuild);
 
             Assert.IsTrue(expectedParameters.SequenceEqual(command.Parameters));
         }

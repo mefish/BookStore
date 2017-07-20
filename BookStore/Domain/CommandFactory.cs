@@ -11,7 +11,7 @@ namespace BookStore.Domain
         [Dependency]
         public IBookInventory BookInventory { get; set; }
 
-        public IPresenter BuildCommand(string[] commandToBuild)
+        public IPresenter BuildPresnter(string[] commandToBuild)
         {
             IPresenter presenter = new CommandNotFoundCommand();
             if (commandToBuild.Length == 0) return presenter;
