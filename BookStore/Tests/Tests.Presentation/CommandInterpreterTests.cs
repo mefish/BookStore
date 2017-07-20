@@ -27,20 +27,6 @@ namespace BookStore.Tests.Tests.Presentation
             _commandMock = new Mock<ICommand>();
         }
 
-        private void CreateCommandParser()
-        {
-            _commandParser = new Mock<ICommandParser>();
-
-            _commandInterpreter.CommandParser = _commandParser.Object;
-        }
-
-        private void CreateCommandFactory()
-        {
-            _commandFactory = new Mock<ICommandFactory>();
-
-            _commandInterpreter.CommandFactory = _commandFactory.Object;
-        }
-
         [Test]
         public void CanViewWelcomeMessage_Success()
         {
@@ -50,30 +36,25 @@ namespace BookStore.Tests.Tests.Presentation
         }
 
         [Test]
-        public void CommandWillBeExecutedWhenBuild()
+        public void CommandWillBeExecutedWhenBuilt()
         {
-            SetUpCommandToReturnCommandResult();
+            SetUpCommand(false);
 
-            _commandParser.Setup(x => x.Parse(It.IsAny<string>())).Returns(new string[1]);
+            SetUpParser();
 
-            SetUpCommandFactoryReturnsCommandMock();
+            SetUpCommandFactory();
 
             _commandInterpreter.Execute(string.Empty);
 
             _commandMock.VerifyAll();
         }
 
-        private void SetUpCommandFactoryReturnsCommandMock()
-        {
-            _commandFactory.Setup(x => x.BuildCommand(It.IsAny<string[]>())).Returns(_commandMock.Object);
-        }
-
         [Test]
         public void CommandWillCallFactoryToPopulatePropertiesFromAgruments()
         {
-            _commandParser.Setup(x => x.Parse(It.IsAny<string>())).Returns(new string[1]);
+            SetUpParser();
 
-            SetUpCommandFactoryReturnsCommandMock();
+            SetUpCommandFactory();
 
             _commandMock.Setup(x => x.BuildPropertiesFromParameters());
 
@@ -83,11 +64,27 @@ namespace BookStore.Tests.Tests.Presentation
         }
 
         [Test]
+        public void SuccessfulCommandsReturnSuccess()
+        {
+            SetUpParser();
+
+            SetUpCommandFactory();
+
+            var successMessage = "It worked!";
+
+            SetUpCommand(true, successMessage);
+
+            var result = _commandInterpreter.Execute(string.Empty);
+
+            Assert.AreEqual($"Success - {successMessage}", result);
+        }
+
+        [Test]
         public void CommandsAreParsedThroughCommandParser()
         {
-            _commandParser.Setup(x => x.Parse(It.IsAny<string>())).Returns(new string[1]);
+            SetUpParser();
 
-            SetUpCommandFactoryReturnsCommandMock();
+            SetUpCommandFactory();
 
             _commandInterpreter.Execute(string.Empty);
 
@@ -114,9 +111,9 @@ namespace BookStore.Tests.Tests.Presentation
         [Test]
         public void IfCommandHasNoResultReportUnknownError()
         {
-            _commandParser.Setup(x => x.Parse(It.IsAny<string>())).Returns(new string[1]);
+            SetUpParser();
 
-            SetUpCommandFactoryReturnsCommandMock();
+            SetUpCommandFactory();
 
             var response = _commandInterpreter.Execute(string.Empty);
 
@@ -128,31 +125,62 @@ namespace BookStore.Tests.Tests.Presentation
         {
             _commandFactory.Setup(x => x.BuildCommand(new string[0])).Returns(_commandMock.Object);
 
-            SetUpCommandToReturnCommandResult("something went wrong");
+            var errorMessage = "something went wrong";
+
+            SetUpCommand(false, errorMessage);
 
             var result = _commandInterpreter.Execute(string.Empty);
 
-            Assert.AreEqual("Error - something went wrong", result);
+            Assert.AreEqual($"Error - {errorMessage}", result);
         }
 
         [Test]
         public void OnCommandWillDisplayErrorMessage()
         {
-            SetUpCommandFactoryReturnsCommandMock();
+            SetUpCommandFactory();
 
-            SetUpCommandToReturnCommandResult("you can't do that!");
+            var errorMessage = "you can't do that!";
+
+            SetUpCommand(false, errorMessage);
 
             var result = _commandInterpreter.Execute(string.Empty);
 
-            Assert.AreEqual("Error - you can't do that!", result);
+            Assert.AreEqual($"Error - {errorMessage}", result);
         }
 
-        private void SetUpCommandToReturnCommandResult(string message = "")
+        private void SetUpParser()
         {
-            _commandMock.Setup(x => x.Execute()).Returns(new CommandResult
-                                                         {
-                                                             Message = message
-                                                         });
+            _commandParser.Setup(x => x.Parse(It.IsAny<string>())).Returns(new string[1]);
+        }
+
+        private void SetUpCommandFactory()
+        {
+            _commandFactory.Setup(x => x.BuildCommand(It.IsAny<string[]>())).Returns(_commandMock.Object);
+        }
+
+        private void CreateCommandParser()
+        {
+            _commandParser = new Mock<ICommandParser>();
+
+            _commandInterpreter.CommandParser = _commandParser.Object;
+        }
+
+        private void CreateCommandFactory()
+        {
+            _commandFactory = new Mock<ICommandFactory>();
+
+            _commandInterpreter.CommandFactory = _commandFactory.Object;
+        }
+
+        private void SetUpCommand(bool wasSuccussful, string message = "")
+        {
+            var commandResult = new CommandResult
+                                {
+                                    Message = message,
+                                    WasSuccessful = wasSuccussful
+                                };
+
+            _commandMock.Setup(x => x.Execute()).Returns(commandResult);
         }
     }
 }

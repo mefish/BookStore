@@ -53,8 +53,7 @@ namespace BookStore
 
         private static string Execute(string command)
         {
-            //            return CommandInterpreter.Execute(command);
-            return command;
+            return _commandInterpreter.Execute(command);
         }
 
         public void DisplayToUser(string stringToDisplay)

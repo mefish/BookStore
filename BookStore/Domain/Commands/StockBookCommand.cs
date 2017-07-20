@@ -16,6 +16,8 @@ namespace BookStore.Domain.Commands
 
         public CommandResult Execute()
         {
+            if (!IsValid) return new CommandResult();
+
             var bookToAdd = new Book
                             {
                                 ISBN = ISBN
@@ -23,10 +25,16 @@ namespace BookStore.Domain.Commands
 
             BookInventory.AddToInventory(bookToAdd);
 
-            return new CommandResult();
+            return new CommandResult
+                   {
+                       WasSuccessful = true,
+                       Message = "Book Stocked!"
+                   };
         }
 
         public string[] Parameters { get; set; }
+
+        public bool IsValid { get { return ISBN != null; } }
 
         public void BuildPropertiesFromParameters()
         {

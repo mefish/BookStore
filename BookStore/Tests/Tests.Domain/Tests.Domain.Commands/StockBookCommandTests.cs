@@ -53,6 +53,23 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
         }
 
         [Test]
+        public void OnStoreSuccessWillReturnSuccess()
+        {
+            _command.Parameters = new[]
+                                  {
+                                      ISBN
+                                  };
+
+            _bookInventoryMock.Setup(x => x.AddToInventory(It.IsAny<Book>()));
+
+            _command.BuildPropertiesFromParameters();
+
+           var result = _command.Execute();
+
+            Assert.IsTrue(result.WasSuccessful);
+        }
+
+        [Test]
         public void BooksWithISBNAreAddedToInventory()
         {
             _command.Parameters = new[]

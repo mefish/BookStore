@@ -13,7 +13,7 @@ namespace BookStore.Tests.Tests.AcceptanceTests
     [TestFixture]
     class InventoryTests
     {
-        [Test]
+        [Test] 
         public void CanAddBookToInventorySuccess()
         {
             var commandInterpreter = Configuration.UnityContainer.Resolve<ICommandInterpreter>();

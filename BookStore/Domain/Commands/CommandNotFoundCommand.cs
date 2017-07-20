@@ -13,6 +13,8 @@ namespace BookStore.Domain.Commands
 
         public string[] Parameters { get; set; }
 
+        public bool IsValid { get; }
+
         public void BuildPropertiesFromParameters()
         {
             throw new NotImplementedException();
