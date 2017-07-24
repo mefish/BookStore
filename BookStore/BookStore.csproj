@@ -88,11 +88,13 @@
     <Compile Include="Infrastructure\BookStoreInventory.cs" />
     <Compile Include="Presentation\CommandInterpreter.cs" />
     <Compile Include="Presentation\CommandParser.cs" />
+    <Compile Include="Presentation\Commands\CommandStrings.cs" />
     <Compile Include="Presentation\Commands\StockBookPresenter.cs" />
     <Compile Include="Presentation\Commands\ViewInventoryPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\Tests.AcceptanceTests\InventoryTests.cs" />
+    <Compile Include="Tests\Tests.AcceptanceTests\InventoryAcceptanceTests.cs" />
+    <Compile Include="Tests\Tests.Common\TestHelpers.cs" />
     <Compile Include="Tests\Tests.Domain\Tests.Domain.Commands\ViewInventoryCommandTests.cs" />
     <Compile Include="Tests\Tests.Presentation\CommandPresenterFactoryTests.cs" />
     <Compile Include="Tests\Tests.Domain\Tests.Domain.Commands\StockBookCommandTests.cs" />

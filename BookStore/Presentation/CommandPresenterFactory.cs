@@ -19,10 +19,10 @@ namespace BookStore.Presentation
 
             switch (commandToBuild[0])
             {
-                case "stock":
+                case CommandStrings.STOCK_BOOK_COMMAND:
                     presenter = new StockBookPresenter(this);
                     break;
-                case "inventory":
+                case CommandStrings.INVENTORY_COMMAND:
                     presenter = new ViewInventoryPresenter(this);
                     break;
             }

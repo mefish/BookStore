@@ -22,18 +22,15 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
             SetUpBookInventory();
 
             _command = new StockBookCommand(_commandFactory.Object);
-        }
 
-        private void SetUpBookInventory()
-        {
-            _bookInventoryMock = new Mock<IBookInventory>();
-
-            _commandFactory.Setup(x => x.BookInventory).Returns(_bookInventoryMock.Object);
+            _command.ISBN = ISBN;
         }
 
         [Test]
         public void StockingABookWithoutISBNFails()
         {
+            _command.ISBN = null;
+
             var result = _command.Execute();
 
             Assert.IsFalse(result.WasSuccessful);
@@ -44,8 +41,6 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
         {
             _bookInventoryMock.Setup(x => x.AddToInventory(It.IsAny<Book>()));
 
-            _command.ISBN = ISBN;
-
             var result = _command.Execute();
 
             Assert.IsTrue(result.WasSuccessful);
@@ -54,8 +49,6 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
         [Test]
         public void BooksWithISBNAreAddedToInventory()
         {
-            _command.ISBN = ISBN;
-
             Book book = null;
 
             _bookInventoryMock.Setup(x => x.AddToInventory(It.IsAny<Book>()))
@@ -64,6 +57,13 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
             _command.Execute();
 
             Assert.AreEqual(ISBN, book.ISBN);
+        }
+
+        private void SetUpBookInventory()
+        {
+            _bookInventoryMock = new Mock<IBookInventory>();
+
+            _commandFactory.Setup(x => x.BookInventory).Returns(_bookInventoryMock.Object);
         }
     }
 }

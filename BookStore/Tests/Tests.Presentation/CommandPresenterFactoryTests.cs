@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
-using BookStore.Domain;
 using BookStore.Presentation;
 using BookStore.Presentation.Commands;
 using NUnit.Framework;
 
-namespace BookStore.Tests.Tests.Domain
+namespace BookStore.Tests.Tests.Presentation
 {
     [TestFixture]
     internal class CommandPresenterFactoryTests
@@ -28,14 +27,14 @@ namespace BookStore.Tests.Tests.Domain
             Assert.IsFalse(result.WasSuccessful);
         }
 
-        [TestCase("stock", typeof(StockBookPresenter))]
-        [TestCase("inventory", typeof(ViewInventoryPresenter))]
+        [TestCase(CommandStrings.STOCK_BOOK_COMMAND, typeof(StockBookPresenter))]
+        [TestCase(CommandStrings.INVENTORY_COMMAND, typeof(ViewInventoryPresenter))]
         public void WillBuildPresenterForCommand(string command, Type expectedtype)
         {
             var commandFactory = _commandPresenterFactory.BuildPresnter(new[]
-                                                                         {
-                                                                             command
-                                                                         });
+                                                                        {
+                                                                            command
+                                                                        });
 
             Assert.AreEqual(expectedtype, commandFactory.GetType());
         }

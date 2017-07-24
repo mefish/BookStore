@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using BookStore.Core.Core.Interfaces;
 using BookStore.Core.Core.Models;
 using BookStore.Domain.Commands;
+using BookStore.Tests.Tests.Common;
 using Moq;
-using NUnit.Framework.Internal;
 using NUnit.Framework;
 
 namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
 {
     [TestFixture]
-    class ViewInventoryCommandTests
+    internal class ViewInventoryCommandTests
     {
-        private const string ISBN = "123";
         private Mock<IBookInventory> _bookInventoryMock;
         private ViewInventoryCommand _command;
         private Mock<ICommandPresenterFactory> _commandFactory;
@@ -48,30 +43,8 @@ namespace BookStore.Tests.Tests.Domain.Tests.Domain.Commands
         [Test]
         public void WillReturnAllBooksInInventory()
         {
-            var bookList = new List<Book>
-                              {
-                                  new Book
-                                  {
-                                      ISBN = "123",
-                                      Title = "Meditations",
-                                      Author = "Aurelius",
-                                      Price = 12.50
-                                  },
-                                  new Book
-                                  {
-                                      ISBN = "456",
-                                      Title = "The Stranger",
-                                      Author = "Camus",
-                                      Price = 13.75
-                                  },
-                                  new Book
-                                  {
-                                      ISBN = "789",
-                                      Title = "Starship Troopers",
-                                      Author = "Heinlein",
-                                      Price = 15.60
-                                  }
-                              };
+            var bookList = TestHelpers.TestBookList;
+
             _bookInventoryMock.Setup(x => x.GetAllBooks()).Returns(bookList);
 
             var result = _command.Execute();

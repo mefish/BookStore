@@ -25,11 +25,6 @@ namespace BookStore.Tests.Tests.Presentation
             Assert.AreEqual(string.Empty, _result[0]);
         }
 
-        private void ParseCommand(string command)
-        {
-            _result = _commandParser.Parse(command);
-        }
-
         [Test]
         public void ReturnsCommandAtFirstIndex()
         {
@@ -58,6 +53,11 @@ namespace BookStore.Tests.Tests.Presentation
             ParseCommand(command);
 
             Assert.AreEqual(command, _result[0]);
+        }
+
+        private void ParseCommand(string command)
+        {
+            _result = _commandParser.Parse(command);
         }
     }
 }

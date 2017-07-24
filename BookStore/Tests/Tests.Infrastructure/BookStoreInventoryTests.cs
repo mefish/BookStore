@@ -1,43 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using BookStore.Core.Core.Models;
 using BookStore.Infrastructure;
-using NUnit.Framework.Internal;
 using NUnit.Framework;
 
 namespace BookStore.Tests.Tests.Infrastructure
 {
     [TestFixture]
-    class BookStoreInventoryTests
+    internal class BookStoreInventoryTests
     {
+        private Book _book;
+        private BookStoreInventory _bookInventory;
+
+        [SetUp]
+        public void Setup()
+        {
+            _bookInventory = new BookStoreInventory();
+            _book = new Book();
+        }
+
         [Test]
         public void CanStockABookInInventory()
         {
-            var inventory = new BookStoreInventory();
-            
-            var book = new Book();
+            _bookInventory.AddToInventory(_book);
 
-            inventory.AddToInventory(book);
-
-            Assert.IsTrue(inventory.GetAllBooks().Contains(book));
-
+            Assert.IsTrue(_bookInventory.GetAllBooks().Contains(_book));
         }
 
         [Test]
         public void CanDeleteAllBooksFromInventory()
         {
-            var inventory = new BookStoreInventory();
+            _bookInventory.AddToInventory(_book);
 
-            var book = new Book();
+            _bookInventory.ClearInventory();
 
-            inventory.AddToInventory(book);
-
-            inventory.ClearInventory();
-
-            Assert.IsEmpty(inventory.GetAllBooks());
+            Assert.IsEmpty(_bookInventory.GetAllBooks());
         }
     }
 }
