@@ -81,6 +81,7 @@
     <Compile Include="Core\Core.Interfaces\IPresenter.cs" />
     <Compile Include="Core\Core.Models\Book.cs" />
     <Compile Include="Core\Core.Models\CommandResult.cs" />
+    <Compile Include="Domain\Commands\ViewInventoryCommand.cs" />
     <Compile Include="Presentation\CommandPresenterFactory.cs" />
     <Compile Include="Domain\Commands\CommandNotFoundCommand.cs" />
     <Compile Include="Domain\Commands\StockBookCommand.cs" />
@@ -92,12 +93,14 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Tests.AcceptanceTests\InventoryTests.cs" />
+    <Compile Include="Tests\Tests.Domain\Tests.Domain.Commands\ViewInventoryCommandTests.cs" />
     <Compile Include="Tests\Tests.Presentation\CommandPresenterFactoryTests.cs" />
     <Compile Include="Tests\Tests.Domain\Tests.Domain.Commands\StockBookCommandTests.cs" />
     <Compile Include="Tests\Tests.Infrastructure\BookStoreInventoryTests.cs" />
     <Compile Include="Tests\Tests.Presentation\CommandInterpreterTests.cs" />
     <Compile Include="Tests\Tests.Presentation\CommandParserTests.cs" />
     <Compile Include="Tests\Tests.Presentation\Commands\StockBookPresenterTests.cs" />
+    <Compile Include="Tests\Tests.Presentation\Commands\ViewInventoryPresenterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

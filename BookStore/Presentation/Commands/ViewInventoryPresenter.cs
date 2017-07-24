@@ -1,25 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BookStore.Core.Core.Interfaces;
 using BookStore.Core.Core.Models;
+using BookStore.Domain.Commands;
 
 namespace BookStore.Presentation.Commands
 {
-    class ViewInventoryPresenter : IPresenter
+    internal class ViewInventoryPresenter : ViewInventoryCommand, IPresenter
     {
+        public ViewInventoryPresenter(ICommandPresenterFactory presenterFactory)
+            : base(presenterFactory) { }
+
         public string[] Parameters { get; set; }
 
-        public void BuildPropertiesFromParameters()
-        {
-            throw new NotImplementedException();
-        }
+        public void BuildPropertiesFromParameters() { }
 
         public CommandResult ExecuteCommand()
         {
-            throw new NotImplementedException();
+            return Execute();
+        }
+
+        public string ViewBookAsString(Book book)
+        {
+            return $"ISBN: {book.ISBN} Title: {book.Title} Author: {book.Author} Price: ${book.Price}{Environment.NewLine}";
+        }
+
+        public string PrintResult()
+        {
+            Execute();
+
+            var printedResult = InventoryList.Select(ViewBookAsString);
+
+            return string.Concat(printedResult);
         }
     }
 }

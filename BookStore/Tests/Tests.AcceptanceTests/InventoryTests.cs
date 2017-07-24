@@ -26,7 +26,7 @@ namespace BookStore.Tests.Tests.AcceptanceTests
         }
 
         [Test]
-        [Ignore("In Progress")]
+        [Ignore("In progress")]
         public void ICanViewAllBooksInInventory()
         {
             var commandInterpreter = Configuration.UnityContainer.Resolve<ICommandInterpreter>();

@@ -23,8 +23,8 @@ namespace BookStore.Presentation
                     presenter = new StockBookPresenter(this);
                     break;
                 case "inventory":
-                    presenter = new ViewInventoryPresenter();
-                break;
+                    presenter = new ViewInventoryPresenter(this);
+                    break;
             }
 
             presenter.Parameters = commandToBuild.Skip(1).ToArray();
