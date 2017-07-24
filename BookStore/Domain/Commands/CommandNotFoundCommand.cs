@@ -1,24 +1,15 @@
-﻿using System;
-using BookStore.Core.Core.Interfaces;
+﻿using BookStore.Core.Core.Interfaces;
 using BookStore.Core.Core.Models;
 
 namespace BookStore.Domain.Commands
 {
     internal class CommandNotFoundCommand : IPresenter
     {
-        public CommandResult Execute()
-        {
-            return new CommandResult();
-        }
+        public bool IsValid { get; }
 
         public string[] Parameters { get; set; }
 
-        public bool IsValid { get; }
-
-        public void BuildPropertiesFromParameters()
-        {
-            throw new NotImplementedException();
-        }
+        public void BuildPropertiesFromParameters() { }
 
         public CommandResult ExecuteCommand()
         {
@@ -26,6 +17,11 @@ namespace BookStore.Domain.Commands
                    {
                        Message = "Command not found"
                    };
+        }
+
+        public CommandResult Execute()
+        {
+            return new CommandResult();
         }
     }
 }

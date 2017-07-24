@@ -27,7 +27,7 @@ namespace BookStore
         private static void RegisterTypes()
         {
             _unityContainer.RegisterType<ICommandInterpreter, CommandInterpreter>();
-            _unityContainer.RegisterType<ICommandPresenterFactory, CommandPresenterPresenterFactory>();
+            _unityContainer.RegisterType<ICommandPresenterFactory, CommandPresenterFactory>();
             _unityContainer.RegisterType<ICommandParser, CommandParser>();
             _unityContainer.RegisterInstance(typeof(IBookInventory), new BookStoreInventory());
         }

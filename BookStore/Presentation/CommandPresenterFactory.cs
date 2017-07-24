@@ -4,9 +4,9 @@ using BookStore.Domain.Commands;
 using BookStore.Presentation.Commands;
 using Microsoft.Practices.Unity;
 
-namespace BookStore.Domain
+namespace BookStore.Presentation
 {
-    public class CommandPresenterPresenterFactory : ICommandPresenterFactory
+    public class CommandPresenterFactory : ICommandPresenterFactory
     {
         [Dependency]
         public IBookInventory BookInventory { get; set; }
@@ -14,9 +14,21 @@ namespace BookStore.Domain
         public IPresenter BuildPresnter(string[] commandToBuild)
         {
             IPresenter presenter = new CommandNotFoundCommand();
+
             if (commandToBuild.Length == 0) return presenter;
-            if (commandToBuild[0] == "stock") presenter = new StockBookPresenter(this);
+
+            switch (commandToBuild[0])
+            {
+                case "stock":
+                    presenter = new StockBookPresenter(this);
+                    break;
+                case "inventory":
+                    presenter = new ViewInventoryPresenter();
+                break;
+            }
+
             presenter.Parameters = commandToBuild.Skip(1).ToArray();
+
             return presenter;
         }
     }

@@ -81,13 +81,14 @@
     <Compile Include="Core\Core.Interfaces\IPresenter.cs" />
     <Compile Include="Core\Core.Models\Book.cs" />
     <Compile Include="Core\Core.Models\CommandResult.cs" />
-    <Compile Include="Domain\CommandFactory.cs" />
+    <Compile Include="Presentation\CommandPresenterFactory.cs" />
     <Compile Include="Domain\Commands\CommandNotFoundCommand.cs" />
     <Compile Include="Domain\Commands\StockBookCommand.cs" />
     <Compile Include="Infrastructure\BookStoreInventory.cs" />
     <Compile Include="Presentation\CommandInterpreter.cs" />
     <Compile Include="Presentation\CommandParser.cs" />
     <Compile Include="Presentation\Commands\StockBookPresenter.cs" />
+    <Compile Include="Presentation\Commands\ViewInventoryPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Tests.AcceptanceTests\InventoryTests.cs" />
