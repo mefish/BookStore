@@ -20,5 +20,12 @@ namespace BookStore.Presentation.Commands
         {
             return Execute();
         }
+
+        public string PrintResult()
+        {
+            ExecuteCommand();
+
+            return $"Successfully added book with ISBN# {ISBN} to inventory!";
+        }
     }
 }

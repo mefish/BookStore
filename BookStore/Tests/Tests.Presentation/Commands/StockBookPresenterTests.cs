@@ -22,6 +22,20 @@ namespace BookStore.Tests.Tests.Presentation.Commands
         }
 
         [Test]
+        public void OnSuccessWillPrintSuccessMessage()
+        {
+            var bookInventoryMock = new Mock<IBookInventory>();
+
+            _presenter.BookInventory = bookInventoryMock.Object;
+
+            _presenter.ISBN = ISBN;
+
+            var result = _presenter.PrintResult();
+
+            Assert.AreEqual($"Successfully added book with ISBN# {ISBN} to inventory!", result);
+        }
+
+        [Test]
         public void CanBuildISBNFromParameters()
         {
             _presenter.Parameters = new[]

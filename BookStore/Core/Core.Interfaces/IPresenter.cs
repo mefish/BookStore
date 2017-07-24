@@ -14,5 +14,7 @@ namespace BookStore.Core.Core.Interfaces
         void BuildPropertiesFromParameters();
 
         CommandResult ExecuteCommand();
+
+        string PrintResult();
     }
 }

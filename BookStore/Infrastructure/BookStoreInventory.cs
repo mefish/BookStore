@@ -10,7 +10,7 @@ namespace BookStore.Infrastructure
 {
     class BookStoreInventory : IBookInventory
     {
-        private List<Book> _booksInInventory = new List<Book>();
+        private readonly List<Book> _booksInInventory = new List<Book>();
 
         public void AddToInventory(Book book)
         {
@@ -20,6 +20,11 @@ namespace BookStore.Infrastructure
         public IEnumerable<Book> GetAllBooks()
         {
             return _booksInInventory;
+        }
+
+        public void ClearInventory()
+        {
+            _booksInInventory.Clear();
         }
     }
 }

@@ -8,5 +8,7 @@ namespace BookStore.Core.Core.Interfaces
         void AddToInventory(Book bookToAdd);
 
         IEnumerable<Book> GetAllBooks();
+
+        void ClearInventory();
     }
 }

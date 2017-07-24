@@ -25,5 +25,19 @@ namespace BookStore.Tests.Tests.Infrastructure
             Assert.IsTrue(inventory.GetAllBooks().Contains(book));
 
         }
+
+        [Test]
+        public void CanDeleteAllBooksFromInventory()
+        {
+            var inventory = new BookStoreInventory();
+
+            var book = new Book();
+
+            inventory.AddToInventory(book);
+
+            inventory.ClearInventory();
+
+            Assert.IsEmpty(inventory.GetAllBooks());
+        }
     }
 }

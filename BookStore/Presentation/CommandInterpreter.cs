@@ -27,7 +27,9 @@ namespace BookStore.Presentation
             var result = builtCommand.ExecuteCommand();
 
             if (result == null) return "Unknown Error";
-            if (result.WasSuccessful) return $"Success - {result.Message}";
+
+            if (result.WasSuccessful) return builtCommand.PrintResult();
+
             return $"Error - {result.Message}";
         }
 

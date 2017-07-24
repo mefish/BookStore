@@ -19,6 +19,11 @@ namespace BookStore.Domain.Commands
                    };
         }
 
+        public string PrintResult()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public CommandResult Execute()
         {
             return new CommandResult();

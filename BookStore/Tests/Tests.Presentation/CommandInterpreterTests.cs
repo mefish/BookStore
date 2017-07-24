@@ -64,19 +64,21 @@ namespace BookStore.Tests.Tests.Presentation
         }
 
         [Test]
-        public void SuccessfulCommandsReturnSuccess()
+        public void SuccessfullCommandsWillPrintPresenterResult()
         {
             SetUpParser();
 
             SetUpPresenterFactory();
 
-            var successMessage = "It worked!";
+            var successMessage = "Great job at typing that command!  You're good at this!";
 
             SetUpCommand(true, successMessage);
 
+            _presenterMock.Setup(x => x.PrintResult()).Returns(successMessage);
+
             var result = _commandInterpreter.Execute(string.Empty);
 
-            Assert.AreEqual($"Success - {successMessage}", result);
+            Assert.AreEqual(successMessage, result);
         }
 
         [Test]
@@ -126,20 +128,6 @@ namespace BookStore.Tests.Tests.Presentation
             _commandFactory.Setup(x => x.BuildPresnter(new string[0])).Returns(_presenterMock.Object);
 
             var errorMessage = "something went wrong";
-
-            SetUpCommand(false, errorMessage);
-
-            var result = _commandInterpreter.Execute(string.Empty);
-
-            Assert.AreEqual($"Error - {errorMessage}", result);
-        }
-
-        [Test]
-        public void OnCommandWillDisplayErrorMessage()
-        {
-            SetUpPresenterFactory();
-
-            var errorMessage = "you can't do that!";
 
             SetUpCommand(false, errorMessage);
 

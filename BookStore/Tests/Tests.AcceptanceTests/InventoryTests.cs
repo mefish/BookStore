@@ -11,6 +11,14 @@ namespace BookStore.Tests.Tests.AcceptanceTests
     [TestFixture]
     internal class InventoryTests
     {
+        [TearDown]
+        public void Teardown()
+        {
+            var data = Configuration.UnityContainer.Resolve<IBookInventory>();
+
+            data.ClearInventory();
+        }
+
         [Test]
         public void CanAddBookToInventorySuccess()
         {
@@ -26,7 +34,6 @@ namespace BookStore.Tests.Tests.AcceptanceTests
         }
 
         [Test]
-        [Ignore("In progress")]
         public void ICanViewAllBooksInInventory()
         {
             var commandInterpreter = Configuration.UnityContainer.Resolve<ICommandInterpreter>();
@@ -71,7 +78,7 @@ namespace BookStore.Tests.Tests.AcceptanceTests
 
         private string ConvertBookToString(Book book)
         {
-            return $"ISBN: {book.ISBN} Title: {book.Title} Author: {book.Author} Price: {book.Price}{Environment.NewLine}";
+            return $"ISBN: {book.ISBN} Title: {book.Title} Author: {book.Author} Price: ${book.Price}{Environment.NewLine}";
         }
     }
 }
