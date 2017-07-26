@@ -15,20 +15,14 @@ namespace BookStore.Tests.Tests.AcceptanceTests
         private IBookInventory _bookInventory;
         private ICommandInterpreter _commandInterpreter;
 
-        [TearDown]
-        public void Teardown()
-        {
-            var data = Configuration.UnityContainer.Resolve<IBookInventory>();
-
-            data.ClearInventory();
-        }
-
         [SetUp]
         public void SetUp()
         {
             _commandInterpreter = Configuration.UnityContainer.Resolve<ICommandInterpreter>();
 
             _bookInventory = Configuration.UnityContainer.Resolve<IBookInventory>();
+
+            _bookInventory.ClearInventory();
         }
 
         [Test]
@@ -50,11 +44,11 @@ namespace BookStore.Tests.Tests.AcceptanceTests
 
             var resultList = bookList.Select(TestHelpers.ConvertBookToString);
 
-            var expectd = string.Concat(resultList);
+            var expected = string.Concat(resultList);
 
             var result = _commandInterpreter.Execute(CommandStrings.INVENTORY_COMMAND);
 
-            Assert.AreEqual(expectd, result);
+            Assert.AreEqual(expected, result);
         }
 
         private void AddListOfBooksToBookInventory(List<Book> bookList)

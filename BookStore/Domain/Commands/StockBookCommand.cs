@@ -14,13 +14,20 @@ namespace BookStore.Domain.Commands
 
         public IBookInventory BookInventory { get; set; }
 
+        public string Title { get; set; }
+        public string Author { get; set; }
+
+        public bool IsValid => ISBN != null;
+
         public CommandResult Execute()
         {
             if (!IsValid) return new CommandResult();
 
             var bookToAdd = new Book
                             {
-                                ISBN = ISBN
+                                ISBN = ISBN,
+                                Title = Title,
+                                Author = Author
                             };
 
             BookInventory.AddToInventory(bookToAdd);
@@ -31,11 +38,5 @@ namespace BookStore.Domain.Commands
                        Message = "Book Stocked!"
                    };
         }
-
-        
-
-        public bool IsValid { get { return ISBN != null; } }
-
-        
     }
 }

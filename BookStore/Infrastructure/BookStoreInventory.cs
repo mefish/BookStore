@@ -10,12 +10,12 @@ namespace BookStore.Infrastructure
 
         public BookStoreInventory()
         {
-            
+            AddTestBooksToInventory();
         }
 
         public void AddToInventory(Book book)
         {
-            _booksInInventory.Add(book); 
+            _booksInInventory.Add(book);
         }
 
         public IEnumerable<Book> GetAllBooks()
@@ -26,6 +26,36 @@ namespace BookStore.Infrastructure
         public void ClearInventory()
         {
             _booksInInventory.Clear();
+        }
+
+        private void AddTestBooksToInventory()
+        {
+            var testBooks = new List<Book>
+                            {
+                                new Book
+                                {
+                                    ISBN = "123",
+                                    Title = "Meditations",
+                                    Author = "Aurelius",
+                                    Price = 12.50
+                                },
+                                new Book
+                                {
+                                    ISBN = "456",
+                                    Title = "The Stranger",
+                                    Author = "Camus",
+                                    Price = 13.75
+                                },
+                                new Book
+                                {
+                                    ISBN = "789",
+                                    Title = "Starship Troopers",
+                                    Author = "Heinlein",
+                                    Price = 15.60
+                                }
+                            };
+
+            foreach (var testBook in testBooks) AddToInventory(testBook);
         }
     }
 }

@@ -10,10 +10,26 @@ namespace BookStore.Presentation.Commands
             : base(commandPresenterFactory) { }
 
         public string[] Parameters { get; set; }
+        
 
         public void BuildPropertiesFromParameters()
         {
             ISBN = Parameters[0];
+            for (int i = 0; i < Parameters.Length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        ISBN = Parameters[i];
+                        break;
+                    case 1:
+                        Title = Parameters[i];
+                        break;
+                    case 2:
+                        Author = Parameters[i];
+                    break;
+                }
+            }
         }
 
         public CommandResult ExecuteCommand()

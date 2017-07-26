@@ -36,16 +36,22 @@ namespace BookStore.Tests.Tests.Presentation.Commands
         }
 
         [Test]
-        public void CanBuildISBNFromParameters()
+        public void CanBuildBookFromParameters()
         {
+            var title = "Title";
+            var author = "Author";
             _presenter.Parameters = new[]
                                     {
-                                        ISBN
+                                        ISBN,
+                                        title,
+                                        author,
                                     };
 
             _presenter.BuildPropertiesFromParameters();
 
             Assert.AreEqual(ISBN, _presenter.ISBN);
+            Assert.AreEqual(title, _presenter.Title);
+            Assert.AreEqual(author, _presenter.Author);
         }
     }
 }
