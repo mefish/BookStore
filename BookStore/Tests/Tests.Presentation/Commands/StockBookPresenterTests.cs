@@ -40,6 +40,7 @@ namespace BookStore.Tests.Tests.Presentation.Commands
         {
             var title = "Title";
             var author = "Author";
+
             _presenter.Parameters = new[]
                                     {
                                         ISBN,
