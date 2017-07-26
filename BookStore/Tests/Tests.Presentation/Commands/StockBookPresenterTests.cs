@@ -9,9 +9,18 @@ namespace BookStore.Tests.Tests.Presentation.Commands
     internal class StockBookPresenterTests
     {
         private const string ISBN = "456";
+        private const string EXPECTED_TITLE = "Title";
+        private const string EXPECTED_AUTHOR = "Author";
         private Mock<ICommandPresenterFactory> _factoryMock;
 
         private StockBookPresenter _presenter;
+
+        private string[] _presenterParameters = new[]
+                                                {
+                                                    ISBN,
+                                                    EXPECTED_TITLE,
+                                                    EXPECTED_AUTHOR,
+                                                };
 
         [SetUp]
         public void Setup()
@@ -36,23 +45,23 @@ namespace BookStore.Tests.Tests.Presentation.Commands
         }
 
         [Test]
-        public void CanBuildBookFromParameters()
+        public void CanAddTitleWithParameters()
         {
-            var title = "Title";
-            var author = "Author";
-
-            _presenter.Parameters = new[]
-                                    {
-                                        ISBN,
-                                        title,
-                                        author,
-                                    };
+            _presenter.Parameters = _presenterParameters;
 
             _presenter.BuildPropertiesFromParameters();
 
-            Assert.AreEqual(ISBN, _presenter.ISBN);
-            Assert.AreEqual(title, _presenter.Title);
-            Assert.AreEqual(author, _presenter.Author);
+            Assert.AreEqual(EXPECTED_TITLE, _presenter.Title);
+        }
+
+        [Test]
+        public void CanAddAuthorWithParameters()
+        {
+            _presenter.Parameters = _presenterParameters;
+
+            _presenter.BuildPropertiesFromParameters();
+
+            Assert.AreEqual(EXPECTED_AUTHOR, _presenter.Author);
         }
     }
 }
