@@ -1,5 +1,4 @@
 ﻿using BookStore.Core.Core.Interfaces;
-using BookStore.Domain;
 using BookStore.Infrastructure;
 using BookStore.Presentation;
 using Microsoft.Practices.Unity;
@@ -29,7 +28,8 @@ namespace BookStore
             _unityContainer.RegisterType<ICommandInterpreter, CommandInterpreter>();
             _unityContainer.RegisterType<ICommandPresenterFactory, CommandPresenterFactory>();
             _unityContainer.RegisterType<ICommandParser, CommandParser>();
-            _unityContainer.RegisterInstance(typeof(IBookInventory), new BookStoreInventory());
+            //            _unityContainer.RegisterInstance(typeof(IBookInventory), new BookStoreInventory());
+            _unityContainer.RegisterInstance(typeof(IBookInventory), new DemonstrationBookStoreInventory());
         }
     }
 }

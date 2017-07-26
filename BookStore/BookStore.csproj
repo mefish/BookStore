@@ -82,6 +82,7 @@
     <Compile Include="Core\Core.Models\Book.cs" />
     <Compile Include="Core\Core.Models\CommandResult.cs" />
     <Compile Include="Domain\Commands\ViewInventoryCommand.cs" />
+    <Compile Include="Infrastructure\DemonstrationBookStoreInventory.cs" />
     <Compile Include="Presentation\CommandPresenterFactory.cs" />
     <Compile Include="Domain\Commands\CommandNotFoundCommand.cs" />
     <Compile Include="Domain\Commands\StockBookCommand.cs" />
